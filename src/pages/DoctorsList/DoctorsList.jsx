@@ -88,15 +88,6 @@ const DoctorsList = () => {
     setSearchQuery("");
   };
 
-  // Calculate department counts
-  const departmentCounts = departments.reduce((acc, dept) => {
-    acc[dept.id] =
-      dept.id === "all"
-        ? allDoctors.length
-        : allDoctors.filter((d) => d.department === dept.id).length;
-    return acc;
-  }, {});
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-blue-50">
       <ToastContainer />

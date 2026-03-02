@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import axios from "axios";
 import storage from "../../../firebase/firebase.storage.config";
-import "./style.css";
 import useAuth from "../../../hooks/useAuth";
-import { Link } from "react-router-dom";
+import "./style.css";
 
 const AddNewDoctor = () => {
   const [Bmdcx, SetBmdcx] = useState([]);
@@ -20,7 +19,8 @@ const AddNewDoctor = () => {
   }, []);
 
   const notify = () => toast.success("Doctor Added Successfully!");
-  const notify2 = () =>toast.warn("A Doctor Already Registered With this BMDC ");
+  const notify2 = () =>
+    toast.warn("A Doctor Already Registered With this BMDC ");
   const { logout, registerUser, SetUser, auth, updateProfile } = useAuth();
   const { register, handleSubmit } = useForm();
   const [image, setImage] = useState([]);
@@ -54,7 +54,7 @@ const AddNewDoctor = () => {
       "state_changed",
       (snapshot) => {
         const prog = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
         );
         setProgress(prog);
       },
@@ -63,7 +63,7 @@ const AddNewDoctor = () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
           setPresUrl(url);
         });
-      }
+      },
     );
   };
   const sendDataToServer = (data) => {
@@ -73,21 +73,21 @@ const AddNewDoctor = () => {
   const onSubmit = (data) => {
     data.img = presUrl;
     registerUser(data.name, data.Mail, data.pass)
-          .then((userCredential) => {
-            const updatedUser = { email: data.Mail, displayName: data.name };
-            SetUser(updatedUser);
-            updateProfile(auth.currentUser, {
-              displayName: data.name,
-            }).then(() => {
-              saveUser(data.Mail, data.name, "doctor");
-              navigate("/home");
-              logout();
-            });
-          })
-          .catch((error) => {});
-        data.pass = "";
-        sendDataToServer(data);
-        notify();
+      .then((userCredential) => {
+        const updatedUser = { email: data.Mail, displayName: data.name };
+        SetUser(updatedUser);
+        updateProfile(auth.currentUser, {
+          displayName: data.name,
+        }).then(() => {
+          saveUser(data.Mail, data.name, "doctor");
+          navigate("/home");
+          logout();
+        });
+      })
+      .catch((error) => {});
+    data.pass = "";
+    sendDataToServer(data);
+    notify();
   };
   return (
     <Container style={{ marginTop: "70px" }}>

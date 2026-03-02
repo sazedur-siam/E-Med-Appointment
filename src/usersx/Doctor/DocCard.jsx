@@ -81,7 +81,6 @@ const DocCard = (props) => {
                   <Button
                     onClick={() => {
                       handleStatus(_id);
-                      SetStatus(true);
                     }}
                     className={apstatus === "Approved" ? "d-none" : "ms-2"}
                     variant="success"

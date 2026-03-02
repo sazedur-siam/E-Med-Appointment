@@ -1,16 +1,11 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { Button, Col, Container, Row, Table } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Col, Container, Row, Table } from "react-bootstrap";
 import MAC from "./MAC";
-import { useForm } from "react-hook-form";
-import { Alert } from "@mui/material";
 
 const ManageAdmins = () => {
   const [users, setUsers] = useState([]);
   const [filterUser, setFilterUser] = useState([]);
-  const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => console.log(data);
 
   useEffect(() => {
     axios.get("https://project-101-doctor.herokuapp.com/users").then((data) => {
@@ -31,9 +26,8 @@ const ManageAdmins = () => {
 
   return (
     <Container>
-     
       <h2 className="text-center mt-5 fw-bold">Admin Management</h2>
-         <div className="w-50 mt-5">
+      <div className="w-50 mt-5">
         <p>Total User's : {totalUser}</p>
         <p>Active Admin's : {activeAdmin}</p>
       </div>
@@ -63,20 +57,15 @@ const ManageAdmins = () => {
             className=""
             style={{ borderLeft: "5px solid lightblue" }}
           >
-            <Table
-            striped
-                bordered
-                hover
-                className="text-center"
-            >
+            <Table striped bordered hover className="text-center">
               <thead>
-                  <tr>
-                    <th style={{width:"23.7rem"}}>Name</th>
-                    <th style={{width:"23.7rem"}}>Mail</th>
-                    <th style={{width:"6.2rem"}}>Role</th>
-                    <th >Action</th>
-                  </tr>
-                </thead>
+                <tr>
+                  <th style={{ width: "23.7rem" }}>Name</th>
+                  <th style={{ width: "23.7rem" }}>Mail</th>
+                  <th style={{ width: "6.2rem" }}>Role</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
             </Table>
             <div
               style={{
@@ -91,7 +80,6 @@ const ManageAdmins = () => {
                 hover
                 className="w-100 p-3 text-center mx-auto mt-5 ob"
               >
-                
                 <tbody>
                   {filterUser.map((data) => (
                     <MAC key={data._id} data={data}></MAC>

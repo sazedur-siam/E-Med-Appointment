@@ -1,11 +1,10 @@
-import React from "react";
-import { Col, Container, Row, Button } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import "./style.css";
-import "./animation.css";
+import { useNavigate } from "react-router-dom";
 import initializeAuthentication from "../../firebase/firebase.init";
-import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import "./animation.css";
+import "./style.css";
 
 initializeAuthentication();
 const DocotorLogin = () => {
@@ -40,7 +39,11 @@ const DocotorLogin = () => {
               width="100%"
             />
           </Col>
-          <Col lg={6} style={{marginTop:"10rem"}} className=" slide-in-elliptic-top-fwd">
+          <Col
+            lg={6}
+            style={{ marginTop: "10rem" }}
+            className=" slide-in-elliptic-top-fwd"
+          >
             <form
               className="from-container mt-5"
               onSubmit={handleSubmit(onSubmit)}

@@ -1,15 +1,31 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { useForm } from "react-hook-form";
 import axios from "axios";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import initializeAuthentication from "../../firebase/firebase.init";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
-import { User, Mail, Phone, Calendar, Lock, UserPlus, Chrome, AlertCircle, CheckCircle } from "lucide-react";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { motion } from "framer-motion";
+import {
+  AlertCircle,
+  Calendar,
+  CheckCircle,
+  Chrome,
+  Lock,
+  Mail,
+  Phone,
+  User,
+  UserPlus,
+} from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../../components/ui/Button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../../components/ui/Card";
 import { Input } from "../../components/ui/Input";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "../../components/ui/Card";
+import initializeAuthentication from "../../firebase/firebase.init";
+import useAuth from "../../hooks/useAuth";
 
 initializeAuthentication();
 
@@ -17,7 +33,12 @@ const Registration = () => {
   const { registerUser, SetUser, auth, updateProfile } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -58,21 +79,24 @@ const Registration = () => {
     const img_url = `https://randomuser.me/api/portraits/men/${genRandom(100)}.jpg`;
 
     try {
-      await axios.post('https://project-101-doctor.herokuapp.com/reg-user-info', data);
-      
-      const userCredential = await registerUser(name, email, pass);
+      await axios.post(
+        "https://project-101-doctor.herokuapp.com/reg-user-info",
+        data,
+      );
+
+      await registerUser(name, email, pass);
       const updatedUser = { email, displayName: name };
       SetUser(updatedUser);
-      
+
       await updateProfile(auth.currentUser, {
         displayName: name,
         photoURL: img_url,
       });
-      
+
       localStorage.setItem("isAuth", "true");
       saveUser(email, name);
       setSuccess(true);
-      
+
       setTimeout(() => {
         navigate(location.state?.from || "/home");
       }, 1500);
@@ -125,7 +149,9 @@ const Registration = () => {
               transition={{ delay: 0.3, duration: 0.5 }}
               className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 glass-effect px-6 py-3 rounded-xl shadow-xl"
             >
-              <p className="text-sm font-semibold text-gray-700">Join us today! 🎉</p>
+              <p className="text-sm font-semibold text-gray-700">
+                Join us today! 🎉
+              </p>
             </motion.div>
           </div>
         </motion.div>
@@ -146,8 +172,12 @@ const Registration = () => {
               >
                 <UserPlus className="w-8 h-8 text-white" />
               </motion.div>
-              <CardTitle className="text-3xl font-bold">Create Account</CardTitle>
-              <p className="text-gray-600">Join E-Medic today and get started</p>
+              <CardTitle className="text-3xl font-bold">
+                Create Account
+              </CardTitle>
+              <p className="text-gray-600">
+                Join E-Medic today and get started
+              </p>
             </CardHeader>
 
             <CardContent className="space-y-4">
@@ -169,132 +199,165 @@ const Registration = () => {
                   className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg flex items-center space-x-2"
                 >
                   <CheckCircle className="w-5 h-5 flex-shrink-0" />
-                  <span className="text-sm">Registration successful! Redirecting...</span>
+                  <span className="text-sm">
+                    Registration successful! Redirecting...
+                  </span>
                 </motion.div>
               )}
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Full Name</label>
+                  <label className="text-sm font-medium text-gray-700">
+                    Full Name
+                  </label>
                   <div className="relative">
                     <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <Input
                       type="text"
                       placeholder="John Doe"
                       className="pl-10"
-                      {...register("displayName", { required: "Name is required" })}
+                      {...register("displayName", {
+                        required: "Name is required",
+                      })}
                     />
                   </div>
                   {errors.displayName && (
-                    <p className="text-red-500 text-xs">{errors.displayName.message}</p>
+                    <p className="text-red-500 text-xs">
+                      {errors.displayName.message}
+                    </p>
                   )}
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Email Address</label>
+                  <label className="text-sm font-medium text-gray-700">
+                    Email Address
+                  </label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <Input
                       type="email"
                       placeholder="your.email@example.com"
                       className="pl-10"
-                      {...register("mail", { 
+                      {...register("mail", {
                         required: "Email is required",
                         pattern: {
                           value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                          message: "Invalid email address"
-                        }
+                          message: "Invalid email address",
+                        },
                       })}
                     />
                   </div>
                   {errors.mail && (
-                    <p className="text-red-500 text-xs">{errors.mail.message}</p>
+                    <p className="text-red-500 text-xs">
+                      {errors.mail.message}
+                    </p>
                   )}
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700">Age</label>
+                    <label className="text-sm font-medium text-gray-700">
+                      Age
+                    </label>
                     <div className="relative">
                       <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                       <Input
                         type="number"
                         placeholder="25"
                         className="pl-10"
-                        {...register("Age", { 
+                        {...register("Age", {
                           required: "Age is required",
                           min: { value: 1, message: "Age must be positive" },
-                          max: { value: 120, message: "Invalid age" }
+                          max: { value: 120, message: "Invalid age" },
                         })}
                       />
                     </div>
                     {errors.Age && (
-                      <p className="text-red-500 text-xs">{errors.Age.message}</p>
+                      <p className="text-red-500 text-xs">
+                        {errors.Age.message}
+                      </p>
                     )}
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700">Phone</label>
+                    <label className="text-sm font-medium text-gray-700">
+                      Phone
+                    </label>
                     <div className="relative">
                       <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                       <Input
                         type="tel"
                         placeholder="+1234567890"
                         className="pl-10"
-                        {...register("contact", { required: "Phone is required" })}
+                        {...register("contact", {
+                          required: "Phone is required",
+                        })}
                       />
                     </div>
                     {errors.contact && (
-                      <p className="text-red-500 text-xs">{errors.contact.message}</p>
+                      <p className="text-red-500 text-xs">
+                        {errors.contact.message}
+                      </p>
                     )}
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Password</label>
+                  <label className="text-sm font-medium text-gray-700">
+                    Password
+                  </label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <Input
                       type="password"
                       placeholder="Create a strong password"
                       className="pl-10"
-                      {...register("password1", { 
+                      {...register("password1", {
                         required: "Password is required",
                         minLength: {
                           value: 6,
-                          message: "Password must be at least 6 characters"
-                        }
+                          message: "Password must be at least 6 characters",
+                        },
                       })}
                     />
                   </div>
                   {errors.password1 && (
-                    <p className="text-red-500 text-xs">{errors.password1.message}</p>
+                    <p className="text-red-500 text-xs">
+                      {errors.password1.message}
+                    </p>
                   )}
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Confirm Password</label>
+                  <label className="text-sm font-medium text-gray-700">
+                    Confirm Password
+                  </label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <Input
                       type="password"
                       placeholder="Confirm your password"
                       className="pl-10"
-                      {...register("password2", { 
+                      {...register("password2", {
                         required: "Please confirm your password",
-                        validate: value => value === password1 || "Passwords do not match"
+                        validate: (value) =>
+                          value === password1 || "Passwords do not match",
                       })}
                     />
                   </div>
                   {errors.password2 && (
-                    <p className="text-red-500 text-xs">{errors.password2.message}</p>
+                    <p className="text-red-500 text-xs">
+                      {errors.password2.message}
+                    </p>
                   )}
                 </div>
 
                 <div className="text-sm">
-                  <span className="text-gray-600">Already have an account? </span>
-                  <Link 
-                    to="/login" 
+                  <span className="text-gray-600">
+                    Already have an account?{" "}
+                  </span>
+                  <Link
+                    to="/login"
                     className="text-primary-600 hover:text-primary-700 font-medium"
                   >
                     Sign in here
@@ -309,9 +372,25 @@ const Registration = () => {
                 >
                   {isLoading ? (
                     <span className="flex items-center justify-center">
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      <svg
+                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
                       </svg>
                       Creating account...
                     </span>
@@ -328,7 +407,9 @@ const Registration = () => {
                     <div className="w-full border-t border-gray-300"></div>
                   </div>
                   <div className="relative flex justify-center text-sm">
-                    <span className="px-4 bg-white text-gray-500">Or register with</span>
+                    <span className="px-4 bg-white text-gray-500">
+                      Or register with
+                    </span>
                   </div>
                 </div>
 
