@@ -1,21 +1,5 @@
 import { motion } from "framer-motion";
-import {
-  Activity,
-  Apple,
-  Brain,
-  Droplet,
-  Eye,
-  Filter,
-  Heart,
-  Pill,
-  Search,
-  Sparkles,
-  Stethoscope,
-  User,
-  Wind,
-  X,
-  Zap,
-} from "lucide-react";
+import { Filter, Search, Stethoscope, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -26,21 +10,6 @@ import { Card } from "../../components/ui/Card";
 import { Input } from "../../components/ui/Input";
 import { departments, doctorsData } from "../../data/doctorsData";
 import useDoctorlist from "../../hooks/useDoctorlist";
-
-const iconMap = {
-  Stethoscope: Stethoscope,
-  Heart: Heart,
-  Pill: Pill,
-  Sparkles: Sparkles,
-  Brain: Brain,
-  User: User,
-  Activity: Activity,
-  Droplet: Droplet,
-  Zap: Zap,
-  Eye: Eye,
-  Wind: Wind,
-  Apple: Apple,
-};
 
 const DoctorsList = () => {
   const [doctorlists] = useDoctorlist();
@@ -86,6 +55,15 @@ const DoctorsList = () => {
     setSelectedDepartment("all");
     setSearchQuery("");
   };
+
+  // Calculate department counts
+  const departmentCounts = departments.reduce((acc, dept) => {
+    acc[dept.id] =
+      dept.id === "all"
+        ? allDoctors.length
+        : allDoctors.filter((d) => d.department === dept.id).length;
+    return acc;
+  }, {});
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-blue-50">

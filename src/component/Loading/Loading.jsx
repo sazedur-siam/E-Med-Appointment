@@ -1,21 +1,20 @@
-import React from "react";
 import "./Loading.css";
 
 const Loading = () => {
   return (
-    <div class="absCenter ">
-      <div class="loaderPill">
-        <div class="loaderPill-anim">
-          <div class="loaderPill-anim-bounce">
-            <div class="loaderPill-anim-flop">
-              <div class="loaderPill-pill"></div>
+    <div className="absCenter ">
+      <div className="loaderPill">
+        <div className="loaderPill-anim">
+          <div className="loaderPill-anim-bounce">
+            <div className="loaderPill-anim-flop">
+              <div className="loaderPill-pill"></div>
             </div>
           </div>
         </div>
-        <div class="loaderPill-floor">
-          <div class="loaderPill-floor-shadow"></div>
+        <div className="loaderPill-floor">
+          <div className="loaderPill-floor-shadow"></div>
         </div>
-        <div class="loaderPill-text">Loading E-MEDIC</div>
+        <div className="loaderPill-text">Loading E-MEDIC</div>
       </div>
     </div>
   );
