@@ -1,23 +1,15 @@
 import axios from "axios";
-import React, { useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { EditorState } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import "draft-js/dist/Draft.css";
 import "./style.css";
 
 const CreatePrescription = () => {
-  const { doctor, mail, name, id } = useParams();
+  const { doctor, mail, name } = useParams();
   const datac = new Date();
   const datecc = datac.toDateString();
-  const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty()
-  );
   const notify = () => toast.success("Successfully Prescribed");
   const {
     register,
@@ -48,11 +40,7 @@ const CreatePrescription = () => {
             >
               <div className="d-flex p-5">
                 <div>
-                  <img
-                    src="prs.svg"
-                    alt=""
-                    width="80%"
-                  />
+                  <img src="prs.svg" alt="" width="80%" />
                 </div>
                 <div style={{ marginTop: "5rem", width: "100%" }}>
                   <h1>{doctor}</h1>

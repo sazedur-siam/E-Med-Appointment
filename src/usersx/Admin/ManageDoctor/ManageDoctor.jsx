@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
+  Button,
   Col,
   Container,
+  FormControl,
+  InputGroup,
   Row,
   Stack,
-  InputGroup,
-  FormControl,
-  Button,
 } from "react-bootstrap";
 
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import MDCard from "./MDCard";
-import useDoctorlist from "../../../hooks/useDoctorlist";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import useDoctorlist from "../../../hooks/useDoctorlist";
+import MDCard from "./MDCard";
 
 const ManageDoctor = () => {
   const [doctorlists] = useDoctorlist();
@@ -27,7 +27,7 @@ const ManageDoctor = () => {
   };
   const srch = (data) => {
     setFIlteredData(
-      morder.filter((mor) => mor.name.toLowerCase().includes(data))
+      morder.filter((mor) => mor.name.toLowerCase().includes(data)),
     );
   };
 
@@ -47,181 +47,178 @@ const ManageDoctor = () => {
   };
   return (
     <>
-    <ToastContainer/>
-    <Container className="c-body">
-      
-      <h2 className="text-center" style={{ fontSize: "50px" }}>
-        Manage Doctors
-      </h2>
+      <ToastContainer />
+      <Container className="c-body">
+        <h2 className="text-center" style={{ fontSize: "50px" }}>
+          Manage Doctors
+        </h2>
 
-      <Container className="">
-      
-        <InputGroup className="mb-3 slide-in-top">
-          <form className="w-100 d-flex" onSubmit={handleSubmit(onSubmit)}>
-            <FormControl
-              placeholder="Search Doctor"
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
-              {...register("svalue", {})}
-            />
-            <Button type="Submit" variant="secondary" id="button-addon2">
-              Search
-            </Button>
-          </form>
-        </InputGroup>
-        <Row className="">
-          <Col
-            lg={2}
-            className="mt-5  hh"
-            style={{ height: "200px", marginTop: "2rem" }}
-          >
-            <Stack gap={3} className="mt-4 slide-in-elliptic-top-fwd">
-              <div className="">
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      onChange={() => {
-                        hc();
-                      }}
-                      name="gilad"
-                    />
-                  }
-                  label="All Department"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      onChange={() => {
-                        hcc("Chest");
-                      }}
-                      name="gilad"
-                    />
-                  }
-                  label="Chest"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      onChange={() => {
-                        hcc("Medicine");
-                      }}
-                      name="gilad"
-                    />
-                  }
-                  label="Medicine"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      onChange={() => {
-                        hcc("Dermatology");
-                      }}
-                      name="gilad"
-                    />
-                  }
-                  label="Dermatology"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      onChange={() => {
-                        hcc("Psychiatry");
-                      }}
-                      name="gilad"
-                    />
-                  }
-                  label="Psychaiatry"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      onChange={() => {
-                        hcc("General Physician");
-                      }}
-                      name="gilad"
-                    />
-                  }
-                  label="General Physician"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      onChange={() => {
-                        hcc("Diabetes");
-                      }}
-                      name="gilad"
-                    />
-                  }
-                  label="Diabetes"
-                />
+        <Container className="">
+          <InputGroup className="mb-3 slide-in-top">
+            <form className="w-100 d-flex" onSubmit={handleSubmit(onSubmit)}>
+              <FormControl
+                placeholder="Search Doctor"
+                aria-label="Recipient's username"
+                aria-describedby="basic-addon2"
+                {...register("svalue", {})}
+              />
+              <Button type="Submit" variant="secondary" id="button-addon2">
+                Search
+              </Button>
+            </form>
+          </InputGroup>
+          <Row className="">
+            <Col
+              lg={2}
+              className="mt-5  hh"
+              style={{ height: "200px", marginTop: "2rem" }}
+            >
+              <Stack gap={3} className="mt-4 slide-in-elliptic-top-fwd">
+                <div className="">
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        onChange={() => {
+                          hc();
+                        }}
+                        name="gilad"
+                      />
+                    }
+                    label="All Department"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        onChange={() => {
+                          hcc("Chest");
+                        }}
+                        name="gilad"
+                      />
+                    }
+                    label="Chest"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        onChange={() => {
+                          hcc("Medicine");
+                        }}
+                        name="gilad"
+                      />
+                    }
+                    label="Medicine"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        onChange={() => {
+                          hcc("Dermatology");
+                        }}
+                        name="gilad"
+                      />
+                    }
+                    label="Dermatology"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        onChange={() => {
+                          hcc("Psychiatry");
+                        }}
+                        name="gilad"
+                      />
+                    }
+                    label="Psychaiatry"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        onChange={() => {
+                          hcc("General Physician");
+                        }}
+                        name="gilad"
+                      />
+                    }
+                    label="General Physician"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        onChange={() => {
+                          hcc("Diabetes");
+                        }}
+                        name="gilad"
+                      />
+                    }
+                    label="Diabetes"
+                  />
 
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      onChange={() => {
-                        hcc("Neuromedicine");
-                      }}
-                      name="gilad"
-                    />
-                  }
-                  label="Neuromedicine"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      onChange={() => {
-                        hcc("Gynaecology");
-                      }}
-                      name="gilad"
-                    />
-                  }
-                  label="Gynaecology"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      onChange={() => {
-                        hcc("Nutritionest");
-                      }}
-                      name="gilad"
-                    />
-                  }
-                  label="Nutritionest"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      onChange={() => {
-                        hcc("Eye");
-                      }}
-                      name="gilad"
-                    />
-                  }
-                  label="Eye"
-                />
-              </div>
-            </Stack>
-          </Col>
-          <Col lg={10} className="o-c">
-            {filteredData.length === 0 ? (
-              <div className=" gc-x ob mt-5  slide-in-top">
-                {doctorlists.map((doctor) => (
-                  <MDCard key={doctor._id} doctor={doctor}></MDCard>
-                ))}
-              </div>
-            ) : (
-              <div className=" gc-x ob mt-5  slide-in-top">
-                {filteredData.map((doctor) => (
-                  <MDCard key={doctor._id} doctor={doctor} hc={hc}></MDCard>
-                ))}
-              </div>
-            )}
-          </Col>
-        </Row>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        onChange={() => {
+                          hcc("Neuromedicine");
+                        }}
+                        name="gilad"
+                      />
+                    }
+                    label="Neuromedicine"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        onChange={() => {
+                          hcc("Gynaecology");
+                        }}
+                        name="gilad"
+                      />
+                    }
+                    label="Gynaecology"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        onChange={() => {
+                          hcc("Nutritionest");
+                        }}
+                        name="gilad"
+                      />
+                    }
+                    label="Nutritionest"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        onChange={() => {
+                          hcc("Eye");
+                        }}
+                        name="gilad"
+                      />
+                    }
+                    label="Eye"
+                  />
+                </div>
+              </Stack>
+            </Col>
+            <Col lg={10} className="o-c">
+              {filteredData.length === 0 ? (
+                <div className=" gc-x ob mt-5  slide-in-top">
+                  {doctorlists.map((doctor) => (
+                    <MDCard key={doctor._id} doctor={doctor}></MDCard>
+                  ))}
+                </div>
+              ) : (
+                <div className=" gc-x ob mt-5  slide-in-top">
+                  {filteredData.map((doctor) => (
+                    <MDCard key={doctor._id} doctor={doctor} hc={hc}></MDCard>
+                  ))}
+                </div>
+              )}
+            </Col>
+          </Row>
+        </Container>
       </Container>
-    </Container>
     </>
-    
   );
 };
 

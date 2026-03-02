@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
-import {Alert, Container} from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Alert, Container } from "react-bootstrap";
+import "react-toastify/dist/ReactToastify.css";
 import useAuth from "../../hooks/useAuth";
 import DocCard from "./DocCard";
-import "react-toastify/dist/ReactToastify.css";
-import AL from "../../component/ApiLoading/AL";
 
 const Docx = () => {
   const { user } = useAuth();
@@ -15,7 +14,7 @@ const Docx = () => {
       .then((data) => {
         setMorder(data);
         setFIlteredData(
-          morder.filter((mor) => mor.Doctor === user.displayName)
+          morder.filter((mor) => mor.Doctor === user.displayName),
         );
       });
   }, [morder, filteredData, user.displayName]);

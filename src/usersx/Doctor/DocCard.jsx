@@ -1,27 +1,16 @@
-import React, { useState } from "react";
+import axios from "axios";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const DocCard = (props) => {
-  const [Status,SetStatus] = useState(false);
   const notify = () => toast.success("Appointment Approved");
   const notify2 = () => toast.success("Appointment Canceled");
-  const {
-    _id,
-    Doctor,
-    Name,
-    Email,
-    apdate,
-    aptime,
-    detail,
-    apstatus,
-    url,
-  } = props.data;
+  const { _id, Doctor, Name, Email, apdate, aptime, detail, apstatus, url } =
+    props.data;
   const handleStatus = (id) => {
     // axios.put(`https://project-101-doctor.herokuapp.com/users-info/${id}`);
     axios.put(`https://project-101-doctor.herokuapp.com/users-info/${id}`, {
@@ -31,7 +20,7 @@ const DocCard = (props) => {
   };
   const handleDelete = (id) => {
     const isDelete = window.confirm(
-      "Are you sure , you want to cancel appointment ?"
+      "Are you sure , you want to cancel appointment ?",
     );
     if (isDelete) {
       fetch(`https://project-101-doctor.herokuapp.com/users-info/${id}`, {
@@ -79,10 +68,14 @@ const DocCard = (props) => {
                 </div>
                 <p className="text-center fw-bold">Problem Details</p>
                 <Card.Text>{detail}</Card.Text>
-                <div style={{width:"50rem"}}>
-                  <Button className={apstatus === "Approved" ? "d-none" : "ms-2"} onClick={() => {
-                    handleDelete(_id);
-                  }} variant="danger">
+                <div style={{ width: "50rem" }}>
+                  <Button
+                    className={apstatus === "Approved" ? "d-none" : "ms-2"}
+                    onClick={() => {
+                      handleDelete(_id);
+                    }}
+                    variant="danger"
+                  >
                     Cancel Appointment
                   </Button>
                   <Button
@@ -90,7 +83,7 @@ const DocCard = (props) => {
                       handleStatus(_id);
                       SetStatus(true);
                     }}
-                    className= {apstatus === "Approved" ? "d-none" : "ms-2"}
+                    className={apstatus === "Approved" ? "d-none" : "ms-2"}
                     variant="success"
                   >
                     Approve Appointment
@@ -115,4 +108,3 @@ const DocCard = (props) => {
 };
 
 export default DocCard;
- 
