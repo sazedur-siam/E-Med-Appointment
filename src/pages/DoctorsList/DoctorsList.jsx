@@ -1,5 +1,21 @@
 import { motion } from "framer-motion";
-import { Filter, Search, Stethoscope, X } from "lucide-react";
+import {
+  Activity,
+  Apple,
+  Brain,
+  Droplet,
+  Eye,
+  Filter,
+  Heart,
+  Pill,
+  Search,
+  Sparkles,
+  Stethoscope,
+  User,
+  Wind,
+  X,
+  Zap,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,6 +26,22 @@ import { Card } from "../../components/ui/Card";
 import { Input } from "../../components/ui/Input";
 import { departments, doctorsData } from "../../data/doctorsData";
 import useDoctorlist from "../../hooks/useDoctorlist";
+
+// Icon mapping for departments
+const iconMap = {
+  Stethoscope: Stethoscope,
+  Heart: Heart,
+  Pill: Pill,
+  Sparkles: Sparkles,
+  Brain: Brain,
+  User: User,
+  Activity: Activity,
+  Droplet: Droplet,
+  Zap: Zap,
+  Eye: Eye,
+  Wind: Wind,
+  Apple: Apple,
+};
 
 const DoctorsList = () => {
   const [doctorlists] = useDoctorlist();
