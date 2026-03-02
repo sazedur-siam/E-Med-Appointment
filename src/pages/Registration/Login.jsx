@@ -1,20 +1,37 @@
-import React, { useState } from "react";
+import axios from "axios";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { motion } from "framer-motion";
+import {
+  AlertCircle,
+  Chrome,
+  Lock,
+  LogIn,
+  Mail,
+  Stethoscope,
+} from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
-import { Mail, Lock, LogIn, Chrome, Stethoscope, AlertCircle } from "lucide-react";
+import { Button } from "../../components/ui/Button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../../components/ui/Card";
+import { Input } from "../../components/ui/Input";
 import initializeAuthentication from "../../firebase/firebase.init";
 import useAuth from "../../hooks/useAuth";
-import axios from "axios";
-import { Button } from "../../components/ui/Button";
-import { Input } from "../../components/ui/Input";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "../../components/ui/Card";
 
 initializeAuthentication();
 
 const Login = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const { logout, login } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -82,7 +99,9 @@ const Login = () => {
               transition={{ delay: 0.3, duration: 0.5 }}
               className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 glass-effect px-6 py-3 rounded-xl shadow-xl"
             >
-              <p className="text-sm font-semibold text-gray-700">Welcome Back! 👋</p>
+              <p className="text-sm font-semibold text-gray-700">
+                Welcome Back! 👋
+              </p>
             </motion.div>
           </div>
         </motion.div>
@@ -121,7 +140,9 @@ const Login = () => {
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Email Address</label>
+                  <label className="text-sm font-medium text-gray-700">
+                    Email Address
+                  </label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <Input
@@ -132,36 +153,48 @@ const Login = () => {
                     />
                   </div>
                   {errors.mail && (
-                    <p className="text-red-500 text-xs">{errors.mail.message}</p>
+                    <p className="text-red-500 text-xs">
+                      {errors.mail.message}
+                    </p>
                   )}
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Password</label>
+                  <label className="text-sm font-medium text-gray-700">
+                    Password
+                  </label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <Input
                       type="password"
                       placeholder="Enter your password"
                       className="pl-10"
-                      {...register("pass", { required: "Password is required" })}
+                      {...register("pass", {
+                        required: "Password is required",
+                      })}
                     />
                   </div>
                   {errors.pass && (
-                    <p className="text-red-500 text-xs">{errors.pass.message}</p>
+                    <p className="text-red-500 text-xs">
+                      {errors.pass.message}
+                    </p>
                   )}
                 </div>
 
                 <div className="flex items-center justify-between text-sm">
-                  <Link 
-                    to="/registration" 
+                  <Link
+                    to="/registration"
                     className="text-primary-600 hover:text-primary-700 font-medium"
                   >
                     Don't have an account?
                   </Link>
-                  <a href="#" className="text-gray-600 hover:text-gray-700">
+                  <button
+                    type="button"
+                    onClick={(e) => e.preventDefault()}
+                    className="text-gray-600 hover:text-gray-700 bg-transparent border-0 cursor-pointer"
+                  >
                     Forgot password?
-                  </a>
+                  </button>
                 </div>
 
                 <Button
@@ -172,9 +205,25 @@ const Login = () => {
                 >
                   {isLoading ? (
                     <span className="flex items-center justify-center">
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      <svg
+                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
                       </svg>
                       Signing in...
                     </span>
@@ -191,7 +240,9 @@ const Login = () => {
                     <div className="w-full border-t border-gray-300"></div>
                   </div>
                   <div className="relative flex justify-center text-sm">
-                    <span className="px-4 bg-white text-gray-500">Or continue with</span>
+                    <span className="px-4 bg-white text-gray-500">
+                      Or continue with
+                    </span>
                   </div>
                 </div>
 
@@ -223,9 +274,13 @@ const Login = () => {
 
             <CardFooter className="text-center text-sm text-gray-600">
               By signing in, you agree to our{" "}
-              <a href="#" className="text-primary-600 hover:underline">
+              <button
+                type="button"
+                onClick={(e) => e.preventDefault()}
+                className="text-primary-600 hover:underline bg-transparent border-0 cursor-pointer"
+              >
                 Terms of Service
-              </a>
+              </button>
             </CardFooter>
           </Card>
         </motion.div>

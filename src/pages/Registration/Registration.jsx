@@ -429,9 +429,13 @@ const Registration = () => {
 
             <CardFooter className="text-center text-sm text-gray-600">
               By creating an account, you agree to our{" "}
-              <a href="#" className="text-primary-600 hover:underline">
+              <button
+                type="button"
+                onClick={(e) => e.preventDefault()}
+                className="text-primary-600 hover:underline bg-transparent border-0 cursor-pointer"
+              >
                 Terms & Privacy
-              </a>
+              </button>
             </CardFooter>
           </Card>
         </motion.div>
